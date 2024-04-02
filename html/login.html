@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log-in Flat | Page</title>
+    <script type="module" src="/javascript/login.js" defer></script>
+    <link rel="stylesheet" href="/css/login.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Josefin Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="main-container">
+
+        <div class="image-title-container">
+            <img src="/Images/Login-bg.png">
+            <h2>Welcome to the flats login page</h2>
+        </div>
+
+        <div class="login-input-container" id="login-input-container">
+            <div class="input-container" id="input-container">
+                <label for="username">Username</label>  
+                <input type="text" id="username-input" placeholder="Username">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="input-container" id="input-container">
+                <label for="password">Password</label>
+                <input type="password" id="password-input" placeholder="Password">
+                <i id="show-password" class="fas fa-lock"></i>
+            </div>
+            <div class="button-container">
+                <button id="login-button">Login</button>
+            </div>
+            <span>You don't have an account?<a href="register.html"> Create account</a></span>
+        </div>
+
+    </div>
+
+
+
+
+</body>
+
+</html>
