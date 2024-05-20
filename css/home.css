@@ -501,19 +501,29 @@ nav {
    }
 
    .main__section > .welcome-homepage-section {
-      width: 100vw;
+      width: 100%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
    }
-   .welcome-homepage-section > h1 {
-      width: 100vw;
+
+   .main__section > .welcome-homepage-section h1 {
+      height: 8rem;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      font-size: 2.5rem;
+      width: 100vw;
    }
+
+   .main__section > .welcome-homepage-section > img {
+      width: 24rem;
+      height: 24rem;
+   }
+   
    .main__section {
-      padding-top: 8rem;
+      padding-top: 7rem;
    }
 
    .main__section > .add__flat__container {
@@ -725,7 +735,7 @@ nav {
    }
 
    .main__section {
-      padding-top: 8rem;
+      padding-top: 7rem;
    }
 
    .main__section > .welcome-homepage-section {

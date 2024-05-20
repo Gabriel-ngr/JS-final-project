@@ -467,6 +467,13 @@ profileBtn.addEventListener("click", () => {
    inputs.password.value = currentUser.password || "";
    inputs.birthDate.value = currentUser.birthDate || "";
 
+   let initialInputs = {
+      email: inputs.email.value.trim(),
+      firstName: inputs.firstName.value.trim(),
+      lastName: inputs.lastName.value.trim(),
+      password: inputs.password.value.trim(),
+   };
+
    // Add event listener to updateButton
    updateButton.addEventListener("click", function (event) {
       event.preventDefault();
@@ -475,6 +482,13 @@ profileBtn.addEventListener("click", () => {
          Swal.fire({
             title: "RentEase Client",
             text: "All inputs must be completed!",
+            icon: "error",
+         });
+         return;
+      } else if (inputs.email.value.trim() === initialInputs.email && inputs.firstName.value.trim() === initialInputs.firstName && inputs.lastName.value.trim() === initialInputs.lastName && inputs.password.value.trim() === initialInputs.password) {
+         Swal.fire({
+            title: "RentEase Client",
+            text: "No changes have been made!",
             icon: "error",
          });
          return;
@@ -503,6 +517,9 @@ profileBtn.addEventListener("click", () => {
 
       // Save the updated current user's information back to localStorage
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      // Update the welcome message with the updated user's first name and last name
+      let welcomeMessage = document.getElementById("welcomeMessage");
+      welcomeMessage.textContent = `Welcome, ${currentUser.firstName} ${currentUser.lastName}`;
 
       Swal.fire({
          title: "RentEase Client",
@@ -514,9 +531,6 @@ profileBtn.addEventListener("click", () => {
       ["email", "firstName", "lastName", "password", "birthDate"].forEach((field) => {
          inputs[field].value = "";
       });
-
-      // updateProfileContainer.style.display = "none";
-      // welcomePageContainer.style.display = "flex";
    });
 });
 
