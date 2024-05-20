@@ -146,7 +146,7 @@ function generateTabel() {
 
       // Add a span for the arrow only for sortable columns
       if (title !== "❌" && title !== "❤️") {
-         th.innerHTML = title + " <span></span>"; // Add a span for the arrow
+         th.innerHTML = title + " <span>&uarr;</span>"; // Add a span for the arrow
 
          // Add click event listener for sorting
          th.addEventListener("click", () => {
@@ -157,10 +157,10 @@ function generateTabel() {
             let sortOrder = th.getAttribute("data-sort-order");
             if (!sortOrder || sortOrder === "desc") {
                sortOrder = "asc";
-               th.querySelector("span").textContent = " ↑"; // Set arrow to up
+               th.querySelector("span").textContent = " ↓"; // Set arrow to down
             } else {
                sortOrder = "desc";
-               th.querySelector("span").textContent = " ↓"; // Set arrow to down
+               th.querySelector("span").textContent = " ↑"; // Set arrow to up
             }
             th.setAttribute("data-sort-order", sortOrder);
 
@@ -173,14 +173,30 @@ function generateTabel() {
                if (!isNaN(cellA)) cellA = Number(cellA);
                if (!isNaN(cellB)) cellB = Number(cellB);
 
-               if (sortOrder === "asc") {
-                  if (cellA < cellB) return -1;
-                  if (cellA > cellB) return 1;
-                  return 0;
+               if (title === "Rent Price") {
+                  // Remove the dollar sign and convert to number
+                  cellA = Number(cellA.replace("$", ""));
+                  cellB = Number(cellB.replace("$", ""));
+
+                  if (sortOrder === "asc") {
+                     return cellA - cellB;
+                  } else {
+                     return cellB - cellA;
+                  }
                } else {
-                  if (cellA > cellB) return -1;
-                  if (cellA < cellB) return 1;
-                  return 0;
+                  // Convert to number if possible
+                  if (!isNaN(cellA)) cellA = Number(cellA);
+                  if (!isNaN(cellB)) cellB = Number(cellB);
+
+                  if (sortOrder === "asc") {
+                     if (cellA < cellB) return -1;
+                     if (cellA > cellB) return 1;
+                     return 0;
+                  } else {
+                     if (cellA > cellB) return -1;
+                     if (cellA < cellB) return 1;
+                     return 0;
+                  }
                }
             });
 
@@ -589,21 +605,3 @@ hamMenu.addEventListener("click", () => {
    hamMenu.classList.toggle("active");
    offScreenMenu.classList.toggle("active");
 });
-
-// // Add event listener to each button
-// menuButtons.forEach((button, index) => {
-//    button.addEventListener("click", () => {
-//       // Hide the off-screen menu
-//       offScreenMenu.classList.remove("active");
-//       hamMenu.classList.remove("active");
-
-//       // Hide all containers
-//       hideAllContainers();
-
-//       // Show the corresponding container
-//       // The index of the button corresponds to the index of the container
-//       if (container[index]) {
-//          container[index].style.display = "flex";
-//       }
-//    });
-// });
