@@ -1,69 +1,82 @@
+// Import toastr and validation functions.
 import toastr from "./toastr.js";
-import { validateEmailInput, validatePasswordInput, validateFirstNameInput, validateLastNameInput, addBirthDateInputEvent, validateBirthDateInput } from "./validation.js";
+import { validateEmailInput, validatePasswordInput, confirmMatchPassword, validateFirstNameInput, validateLastNameInput, validateBirthDateInput, addPasswordToggleEventListeners } from "./validation.js";
 
+// Get references to DOM elements.
 const emailInput = document.getElementById("email-input");
 const passwordInput = document.getElementById("password-input");
+const confirmPassword = document.getElementById("confirm-password-input");
 const firstNameInput = document.getElementById("firstname-input");
 const lastNameInput = document.getElementById("lastname-input");
 const birthDateInput = document.getElementById("birth-input");
-addBirthDateInputEvent(birthDateInput);
 const registerBtn = document.getElementById("button-register");
-const showHidePassword = document.getElementById("show-password");
 
-registerBtn.addEventListener("click", function () {
-   let inputs = [
-      { input: emailInput, validate: validateEmailInput },
-      { input: passwordInput, validate: validatePasswordInput },
-      { input: firstNameInput, validate: validateFirstNameInput },
-      { input: lastNameInput, validate: validateLastNameInput },
-      { input: birthDateInput, validate: validateBirthDateInput },
-   ];
+// Atach input event listener to inputs for real-time validation.
+emailInput.addEventListener("input", () => validateEmailInput(emailInput));
+passwordInput.addEventListener("input", () => validatePasswordInput(passwordInput));
+confirmPassword.addEventListener("input", () => confirmMatchPassword(confirmPassword));
+firstNameInput.addEventListener("input", () => validateFirstNameInput(firstNameInput));
+lastNameInput.addEventListener("input", () => validateLastNameInput(lastNameInput));
+birthDateInput.addEventListener("input", () => validateBirthDateInput(birthDateInput));
 
-   let errors = inputs.filter(({ input, validate }) => !validate(input)).map(({ error }) => error);
+// Get references to all input elements
+const allInputs = [emailInput, passwordInput, confirmPassword, firstNameInput, lastNameInput, birthDateInput];
 
-   if (errors.length > 0) {
-      // toastr.error(errors.join("\n"));
-   } else {
-      validateEmailInput(emailInput) && validatePasswordInput(passwordInput) && validateFirstNameInput(firstNameInput) && validateLastNameInput(lastNameInput) && addBirthDateInputEvent(birthDateInput) && validateBirthDateInput(birthDateInput);
-      const dataFromInput = {
-         email: emailInput.value,
-         password: passwordInput.value,
-         firstName: firstNameInput.value,
-         lastName: lastNameInput.value,
-         birthDate: birthDateInput.value,
-      };
-      // Get the existing data from localStorage
-      let existingUsers = JSON.parse(localStorage.getItem("users"));
+// Add function for clear inputs after all fields are completed and press buton.
+function clearInputs(inputs) {
+   inputs.forEach((input) => {
+      input.value = "";
+   });
+}
+
+function resetInputStyles(inputs) {
+   inputs.forEach((input) => {
+      input.style.border = "";
+   });
+}
+
+// Define User class.
+class User {
+   constructor(email, password, firstName, lastName, birthDate) {
+      (this.id = Math.floor(Math.random() * 10000)), (this.email = email);
+      this.password = password;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.birthDate = birthDate;
+      this.username = firstName + " " + lastName;
+      this.apartments = [];
+      this.favourite = [];
+   }
+}
+
+registerBtn.addEventListener("click", () => {
+   if (emailInput.value && passwordInput.value && confirmPassword.value && firstNameInput.value && lastNameInput.value && birthDateInput.value) {
+      const user = new User(emailInput.value, passwordInput.value, firstNameInput.value, lastNameInput.value, birthDateInput.value);
+
+      // Get existing data from localStorage.
+      let existingUsers = JSON.parse(localStorage.getItem("users")) || [];
       if (!Array.isArray(existingUsers)) {
          existingUsers = [];
       }
-      // Add the new data to the existing data
-      existingUsers.push(dataFromInput);
-      // Save the updated data back to localStorage
+
+      // Add the new data to the existing data.
+      existingUsers.push(user);
+
+      // Save the updated data back to localStorage.
       localStorage.setItem("users", JSON.stringify(existingUsers));
 
-      // Clear the input fields
-      emailInput.value = "";
-      passwordInput.value = "";
-      firstNameInput.value = "";
-      lastNameInput.value = "";
-      birthDateInput.value = "";
+      // Clear the inputs fields.
+      clearInputs(allInputs);
+      resetInputStyles(allInputs);
 
-      // Display succes message
+      // Display succes message.
       toastr["success"]("You just create a new account!");
-
-      // Redirect to the next page after a delay
       setTimeout(function () {
          window.location.href = "login.html";
-      }, 2000); // 3 seconds
+      }, 1000);
+   } else {
+      toastr["warning"]("All inputs must be completed!", "Inputs empty!");
    }
 });
 
-// Password show/hide
-showHidePassword.addEventListener("click", function () {
-   if (passwordInput.type === "password") {
-      passwordInput.type = "text";
-   } else {
-      passwordInput.type = "password";
-   }
-});
+addPasswordToggleEventListeners();

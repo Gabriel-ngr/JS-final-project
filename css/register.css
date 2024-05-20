@@ -12,6 +12,26 @@ body {
    background-attachment: fixed;
 }
 
+.error-message {
+   height: 5px;
+   color: red;
+   font-weight: 300;
+   padding-top: 2px;
+}
+
+.error-container {
+   height: 5px;
+   color: red;
+   font-weight: 300;
+   padding-top: 2px;
+}
+
+.error-container {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+}
+
 .text-form-container {
    display: none;
 }
@@ -48,27 +68,31 @@ body {
    border: none;
    outline: none;
    font-size: 1.2rem;
-   box-shadow: 5px 5px 8px;
 }
 .input-container input,
 .input-container input[type="date"] {
-    padding: 0.8rem;
-    border-radius: 0.6rem;
-    border: none;
-    font-size: 1rem;
-    outline: none;
-    box-shadow: 5px 5px 8px;
+   padding: 0.8rem;
+   border-radius: 0.6rem;
+   border: none;
+   font-size: 1rem;
+   outline: none;
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+   color: #757575;
 }
 
 .input-container label {
-   padding-bottom: 0.6rem;
+   padding-bottom: 0.4rem;
    font-size: 1rem;
 }
 
 .input-container i {
    position: absolute;
+   font-size: 1rem;
    top: 67%;
-   right: 10px;
+   right: 15px;
+   color: rgb(87, 87, 87);
 }
 
 .info-container {
@@ -110,10 +134,9 @@ body {
    color: rgb(0, 0, 0);
 }
 .button-container button:hover {
-   background-color: #5CAAB6;
-    color: #ffffff;
+   background-color: #5caab6;
+   color: #ffffff;
 }
-
 
 .logo-container img {
    width: 10rem;
@@ -165,14 +188,14 @@ body {
    }
 
    .input-container {
-      width: 35vw;
+      width: 30vw;
       padding-top: 1.6rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       position: relative;
    }
-   
+
    .text-form-container {
       display: block;
    }
