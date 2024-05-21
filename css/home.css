@@ -521,7 +521,7 @@ nav {
       width: 24rem;
       height: 24rem;
    }
-   
+
    .main__section {
       padding-top: 7rem;
    }
@@ -732,10 +732,6 @@ nav {
       background-color: #03426b;
       width: 100%;
       z-index: 10;
-   }
-
-   .main__section {
-      padding-top: 7rem;
    }
 
    .main__section > .welcome-homepage-section {
